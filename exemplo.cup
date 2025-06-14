@@ -1,26 +1,25 @@
 import java_cup.runtime.*;
 
 terminal Integer INTEIRO;
-terminal MAIS, MENOS, MENOSUNARIO, PTVIRG, PARENTESQ, PARENTDIR, MULTIPLICACAO, DIVISAO, POTENCIA, RESTO, MAIORQ ,MENORQ;
+terminal MAIS, MENOS, MULTIPLICA, DIVIDE, POTENCIA, RESTO, PTVIRG, PARENTESQ, PARENTDIR;
 
 non terminal inicio;
 non terminal Integer expr;
 
-precedence left MAIS, MENOS, MULTIPLICACAO, DIVISAO, RESTO;
-precedence right MENOSUNARIO, POTENCIA;
+precedence left MAIS, MENOS, MULTIPLICA, DIVIDE, RESTO;
+precedence right POTENCIA;
 
 start with inicio;
 
 inicio ::= expr:e PTVIRG {: System.out.println(e); :}
          ;
 
-expr ::= expr:a MAIS expr:b          {: RESULT = a.intValue() + b.intValue(); :}
-       | expr:a MENOS expr:b         {: RESULT = a.intValue() - b.intValue(); :}
-       | expr:a MULTIPLICACAO expr:b {: RESULT = a.intValue() * b.intValue(); :}
-       | expr:a DIVISAO expr:b       {: RESULT = a.intValue() / b.intValue(); :}
-       | expr:a RESTO expr:b         {: RESULT = a.intValue() % b.intValue(); :}
-       | expr:a POTENCIA expr:b      {: RESULT = (int) Math.pow(a.intValue(), b.intValue()); :}
-       | PARENTESQ expr:a PARENTDIR  {: RESULT = a.intValue(); :}
-       | MENOS expr:a                {: RESULT = -a; :} %prec MENOSUNARIO
-       | INTEIRO:a                   {: RESULT = a.intValue(); :}
+expr ::= expr:a MAIS expr:b         {: RESULT = a.intValue() + b.intValue(); :}
+       | expr:a MENOS expr:b        {: RESULT = a.intValue() - b.intValue(); :}
+       | expr:a MULTIPLICA expr:b   {: RESULT = a.intValue() * b.intValue(); :}
+       | expr:a DIVIDE expr:b       {: RESULT = a.intValue() / b.intValue(); :}
+       | expr:a RESTO expr:b        {: RESULT = a.intValue() % b.intValue(); :}
+       | expr:a POTENCIA expr:b     {: RESULT = (int) Math.pow(a.intValue(), b.intValue()); :}
+       | PARENTESQ expr:a PARENTDIR {: RESULT = a.intValue(); :}
+       | INTEIRO:a                  {: RESULT = a.intValue(); :}
        ;
